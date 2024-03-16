@@ -11,6 +11,7 @@ class ViewController: UIViewController {
     private let tableView = {
         let view = UITableView()
         view.register(MyCell.self, forCellReuseIdentifier: "cell")
+        view.contentInsetAdjustmentBehavior = .never // <-
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -33,6 +34,11 @@ class ViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
         ])
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print(tableView.adjustedContentInset)
     }
     
     static func getLabelHeight(text: String) -> CGFloat {
@@ -62,7 +68,7 @@ extension ViewController: UITableViewDataSource {
         let text = dataSource[indexPath.row]
         cell.configure(text: text)
         
-        print(ViewController.getLabelHeight(text: text))
+//        print(ViewController.getLabelHeight(text: text))
         
         return cell
     }
